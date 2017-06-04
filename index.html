@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>廣告參數設定網頁</title>
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+  <style>
+  	div{
+  		margin:0 auto;
+  	}
+  	span {
+
+  	}
+  	tr, td{
+  		height: 25px !important;
+  	}
+
+  </style>
+  <script>
+
+  function check_des(x){
+     var text = document.getElementById(x).value;
+     var text_list = text.split(" ");
+     var text_result = "";
+     for (i = 0; i < text_list.length; i++) {
+
+     	var temp = text_list[i].toLowerCase();
+        var t = temp.substr(0,1).toUpperCase();
+
+        t += temp.substr(1, temp.length).toLowerCase();  
+     	text_result += ( t);
+     }
+     document.getElementById(x).value = text_result;
+     build_url();
+   };
+
+  function build_url(){
+
+  	var lp = 0;
+    var LandingPage = document.getElementById("LandingPage").value;
+    if(LandingPage.length > 0 ){ LandingPage += "?"; lp=1}
+
+    var source = document.getElementById("source").value;
+    if(source.length > 0 ){ source = "utm_source=" + source;lp=2}
+
+    var medium = document.getElementById("medium").value;  
+    if(medium.length > 0 ){ medium = "utm_medium=" + medium;
+    if(lp == 2){ medium = "&"+medium;}}
+
+  	var content_des = document.getElementById("content_des").value;
+    if(content_des.length > 0 ){ content_des = "utm_content=" + content_des;
+    if(lp == 2){ content_des = "&"+content_des;}}
+
+    var campid = document.getElementById("campid").value;
+    if(campid.length > 0 ){ campid = "utm_compaign=" + campid;
+    if(lp == 2){ campid = "&"+campid;}}
+
+    if(document.getElementById("customer").checked){
+      customer = "<customer></customer>";
+      if(lp == 2){ customer = "&"+customer;}
+    }else{
+      customer = "";
+    }
+
+  	var result = LandingPage + source + medium +content_des+campid+customer;
+  	//document.getElementById("final_url").value = result;
+  	$('#final_url').val(result);
+    $('#final_url').trigger('autoresize');
+
+  }
+
+
+  </script>
+
+</head>
+<body>
+
+
+<div class="row" style="margin-top:20px;">
+
+<div class="col s8 m8 offset-s2">
+<img class="z-depth-2" style="width:100%" src="http://www.neton.com.au/wp-content/uploads/2015/07/webstrip-1024x200.jpg">
+<div>
+
+<div class="card-panel hoverable" >
+
+
+
+<div class="card-tabs" style="background-color:#fff;">
+  <ul class="tabs tabs-fixed-width">
+    <li class="tab"><a class="active" href="#tab_url"><h5>網址產生器</h5></a></li>
+    <li class="tab"><a href="#tab_memo"><h5>如何填寫欄位？</h5></a></li>
+  </ul>
+</div>
+<div class="card-content grey lighten-4">
+  <div id="tab_url">
+      	
+
+
+<div class="row" style="background-color:#fff;">
+	
+	<div class="col s3"><br>
+	<span>登陸頁面網址 url</span>
+	</div>
+	<div class="col s9" style="height:70px;">
+		<div class="input-field">
+		<input id="LandingPage" type="text" class="validate" onblur="build_url()">
+		<label for="LandingPage">Landing Page URL</label>
+		</div>
+	</div>
+
+
+	<div class="col s3">
+	<span>廣告來源</span><br>
+	<span>utm_source</span>
+	</div>
+    <div class="input-field col s9">
+    <script src="source.json"></script>
+    <script src="source.js"></script>
+
+    </div>
+
+	<div class="col s3">
+	<span>廣告通路</span><br>
+	<span>utm_medium</span>
+	</div>
+
+    <div class="input-field col s9">
+    <script src="medium.json"></script>
+    <script src="source.js"></script>
+    </div>
+
+    <div class="row">
+	<div class="col s3">
+	<span>廣告形態</span><br>
+	<span>utm_content</span>
+	</div>
+
+	<div class="col s9" style="height:70px;">
+		<div class="input-field">
+		<input id="content_des" type="text" class="validate" onblur="check_des(this.id)" />
+		<label for="content_des">活動描述，空格分開，如：summer sale</label>
+		</div>
+	</div>
+	</div>
+
+	<div class="col s3">
+	<span>Unica Campaign Id</span>
+	<span>utm_campaign</span></div>
+	<div class="col s9" style="height:70px;">
+		<div class="input-field">
+		<input id="campid" type="text" class="validate" maxlength="14" onblur="build_url()" />
+		<label for="campid">請輸入 Unica 行銷案系統之campaign id(最多14碼)</label>
+		</div>
+	</div>
+
+
+	<div class="col s3"><br><span>每位客戶是否有識別碼</span></div>
+	<div class="col s8" style="height:70px;">
+		<div class="input-field">
+      <input type="checkbox" class="filled-in" id="customer" onchange="build_url()"/>
+      <label for="customer">有的，由行內分析人員產出客製化識別名單</label>
+		</div>
+	</div>
+
+	<div class="row">
+	<textarea id="final_url" placeholder="最終組合網址" class="materialize-textarea col s12"></textarea>
+	</div>
+</div>
+
+</div>
+      <div id="tab_memo">如何填寫欄位？</div>
+</div>
+
+</div>
+
+</div>
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+<script>
+	$(document).ready(function() {
+    $('select').material_select();
+  });
+
+</script>
+</body>
+</html>

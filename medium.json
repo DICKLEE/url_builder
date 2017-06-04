@@ -1,0 +1,3 @@
+data = '[{"id" : "SOCIAL", "name" : "SOCIAL"},{"id" : "EDM", "name" : "EDM"},{"id" : "SMS", "name" : "SMS"},{"id" : "YOUTUBE", "name" : "YOUTUBE"}]';
+category = 2;
+//資料需連著，不可按 ENTER 斷行，否則資料秀不出來 
